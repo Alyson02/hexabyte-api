@@ -8,7 +8,7 @@ export default async function signinValidationMiddleware(req, res, next) {
     const { error } = signinModel.validate(body);
     if (error) {
       const erros = error.details.map((e) => e.message);
-      return res.send({ erros, success: false });
+      return res.send({ erros, success: false }).status(422);
     }
     next();
   } catch (error) {
