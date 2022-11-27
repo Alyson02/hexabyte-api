@@ -25,7 +25,7 @@ export async function signin(req, res) {
 
     if (!user) return res.status(400).send("Email ou senha inválidos");
 
-    const senhaEhValida = bcrypt.compareSync(body.senha, user.senha);
+    const senhaEhValida = bcrypt.compareSync(body.password, user.password);
 
     if (!senhaEhValida) return res.status(400).send("Email ou senha inválidos");
 
