@@ -5,7 +5,10 @@ import { cartsCollection, productsCollection } from "../database.js";
 export async function createCart(req, res) {
   try {
     const user = res.locals.user;
-    const cartExists = await cartsCollection.findOne({ user: user._id });
+    const cartExists = await cartsCollection.findOne({
+      user: user._id,
+      status: cartStatus.OPEN.value,
+    });
 
     if (!cartExists) {
       cartsCollection.insertOne({
@@ -32,7 +35,10 @@ export async function addProduct(req, res) {
   try {
     const body = req.body;
     const user = res.locals.user;
-    const cartExists = await cartsCollection.findOne({ user: user._id });
+    const cartExists = await cartsCollection.findOne({
+      user: user._id,
+      status: cartStatus.OPEN.value,
+    });
 
     if (!body.products) {
       return res.send("Products é obrigatório! ").status(422);
@@ -66,7 +72,10 @@ export async function addProduct(req, res) {
 export async function getProdutos(req, res) {
   try {
     const user = res.locals.user;
-    const cartExists = await cartsCollection.findOne({ user: user._id });
+    const cartExists = await cartsCollection.findOne({
+      user: user._id,
+      status: cartStatus.OPEN.value,
+    });
 
     if (!cartExists) {
       res.send("Abra um carrinho");
@@ -100,7 +109,10 @@ export async function removeProduct(req, res) {
     const { idProduto } = req.params;
 
     const user = res.locals.user;
-    const cartExists = await cartsCollection.findOne({ user: user._id });
+    const cartExists = await cartsCollection.findOne({
+      user: user._id,
+      status: cartStatus.OPEN.value,
+    });
 
     const productsFiltred = cartExists.products.filter(
       (x) => x.toString() != ObjectID(idProduto).toString()

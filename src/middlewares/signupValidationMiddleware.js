@@ -7,12 +7,12 @@ export default function signupValidationMiddleware(req, res, next) {
 
     if (error) {
       const erros = error.details.map((e) => e.message);
-      return res.send({ erros, success: false }).status(422);
+      return res.status(422).send({ erros, success: false });
     }
 
     next();
   } catch (error) {
-    res.send({
+    res.status(500).send({
       message: "Erro ao validar cadastro",
       exception: error,
       success: false,

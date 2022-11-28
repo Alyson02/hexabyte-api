@@ -37,7 +37,7 @@ export async function signin(req, res) {
       { expiresIn: 86400 }
     );
 
-    res.send({ token, nome: user.nome });
+    res.send({ token, nome: user.nome, admin: user.admin });
   } catch (error) {
     res
       .send({
