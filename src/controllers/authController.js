@@ -5,8 +5,8 @@ import jwt from "jsonwebtoken";
 export async function signup(req, res) {
   try {
     const body = req.body;
-    const senhaHash = bcrypt.hashSync(body.senha, 10);
-    await usersCollection.insertOne({ ...body, senha: senhaHash });
+    const senhaHash = bcrypt.hashSync(body.password, 10);
+    await usersCollection.insertOne({ ...body, password: senhaHash });
     res.sendStatus(201);
   } catch (error) {
     res.send({
@@ -20,6 +20,8 @@ export async function signup(req, res) {
 export async function signin(req, res) {
   try {
     const body = req.body;
+
+    console.log(req.body);
 
     const user = await usersCollection.findOne({ email: body.email });
 
@@ -37,10 +39,12 @@ export async function signin(req, res) {
 
     res.send({ token, nome: user.nome });
   } catch (error) {
-    res.send({
-      message: "Erro ao logar",
-      exception: error,
-      success: false,
-    });
+    res
+      .send({
+        message: "Erro ao logar",
+        exception: error,
+        success: false,
+      })
+      .status(500);
   }
 }
