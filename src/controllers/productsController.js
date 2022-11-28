@@ -58,7 +58,7 @@ export async function getProductsbyId(req, res) {
 }
 export async function postProduct(req, res) {
   try {
-    const user = rs.locals.user;
+    const user = res.locals.user;
     if (!user.admin) return res.sendStatus(401);
     await productsCollection.insertOne(req.body);
     res.sendStatus(201);
@@ -73,7 +73,7 @@ export async function editProduct(req, res) {
   const { titulo, descricao, valor, categoria } = req.body;
 
   try {
-    const user = rs.locals.user;
+    const user = res.locals.user;
     if (!user.admin) return res.sendStatus(401);
     await productsCollection.updateOne(
       { _id: new ObjectId(id) },
