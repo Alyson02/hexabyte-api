@@ -7,7 +7,7 @@ export default function signupValidationMiddleware(req, res, next) {
 
     if (error) {
       const erros = error.details.map((e) => e.message);
-      return res.send({ erros, success: false });
+      return res.send({ erros, success: false }).status(422);
     }
 
     next();

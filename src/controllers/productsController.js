@@ -48,8 +48,7 @@ export async function getProductsbyId(req, res) {
   try {
     const { id } = req.params;
     if (id) {
-      const products = [];
-      //const products = await productsCollection.findOne({ _id: ObjectId("") });
+      const products = await productsCollection.findOne({ _id: ObjectId(id) });
       return res.send(products);
     }
   } catch (err) {
